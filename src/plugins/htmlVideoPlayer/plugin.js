@@ -6,6 +6,7 @@ import { useCustomSubtitles } from 'apps/legacy/features/playback/utils/subtitle
 import subtitleAppearanceHelper from 'components/subtitlesettings/subtitleappearancehelper';
 import { AppFeature } from 'constants/appFeature';
 import { PluginType } from 'constants/pluginType';
+import { rewriteTrackEvents } from 'plugins/homefilter/subtitles';
 import { ServerConnections } from 'lib/jellyfin-apiclient';
 import { currentSettings as userSettings } from 'scripts/settings/userSettings';
 import { MediaError } from 'types/mediaError';
@@ -1350,7 +1351,10 @@ export class HtmlVideoPlayer {
                 throw new Error(response);
             }
 
-            return response.json();
+            const subtitleData = await response.json();
+            // Homefilter: a muted word is shown as [...] before any cue is drawn
+            rewriteTrackEvents(subtitleData);
+            return subtitleData;
         } finally {
             this.decrementFetchQueue();
         }

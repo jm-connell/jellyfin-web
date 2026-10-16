@@ -581,6 +581,13 @@ function reloadFromItem(instance, page, params, item, user) {
 
     setTrailerButtonVisibility(page, item);
 
+    // Homefilter: the filter button on a title
+    if (canPlay && (item.MediaType === 'Video' || item.MediaType === 'Audio') && item.Type !== 'TvChannel' && !item.IsFolder) {
+        hideAll(page, 'btnHomefilter', true);
+    } else {
+        hideAll(page, 'btnHomefilter');
+    }
+
     if (item.Type !== 'Program' || canPlay) {
         hideAll(page, 'mainDetailButtons', true);
     } else {
@@ -2036,6 +2043,10 @@ export default function (view, params) {
         playTrailer();
     }
 
+    function onHomefilterClick() {
+        import('plugins/homefilter/modal').then(({ show }) => show(currentItem));
+    }
+
     function onDownloadClick() {
         const api = ServerConnections.getApi(currentItem.ServerId);
         if (!api) {
@@ -2120,6 +2131,7 @@ export default function (view, params) {
         bindAll(view, '.btnCancelSeriesTimer', 'click', onCancelSeriesTimerClick);
         bindAll(view, '.btnCancelTimer', 'click', onCancelTimerClick);
         bindAll(view, '.btnDownload', 'click', onDownloadClick);
+        bindAll(view, '.btnHomefilter', 'click', onHomefilterClick);
         view.querySelector('.trackSelections').addEventListener('submit', onTrackSelectionsSubmit);
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
             splitVersions(self, view, apiClient, params);

@@ -1,0 +1,22 @@
+<div class="formDialogHeader">
+    <button is="paper-icon-button-light" class="btnCancel autoSize" title="${ButtonBack}" tabindex="-1">
+        <span class="material-icons arrow_back" aria-hidden="true"></span>
+    </button>
+    <h3 class="formDialogHeaderTitle">Filters</h3>
+</div>
+<div class="formDialogContent scrollY" style="padding-top:2em;">
+    <div class="dialogContentInner dialog-content-centered">
+        <form class="homefilterForm" style="margin:auto;">
+            <p class="homefilterStatus fieldDescription"></p>
+            <div class="homefilterGroups"></div>
+            <div class="formDialogFooter">
+                <button is="emby-button" type="submit" class="raised button-submit block formDialogFooterItem">
+                    <span>${Save}</span>
+                </button>
+                <button is="emby-button" type="button" class="raised block formDialogFooterItem btnReturnToDefault">
+                    <span>Return to default</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
